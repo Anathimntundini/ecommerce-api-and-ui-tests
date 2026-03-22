@@ -156,9 +156,3 @@ In real-world testing environments, automation is typically executed against sta
 * Attempt checkout with missing billing details
 * Attempt checkout with an empty cart
 
----
-
-
-## Repository
-
-[Git Repository Link Here]
