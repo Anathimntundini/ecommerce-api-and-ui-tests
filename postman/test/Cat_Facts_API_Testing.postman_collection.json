@@ -1,0 +1,225 @@
+{
+  "info": {
+    "_postman_id": "cb3825cb-16a1-419a-a9cd-9ed5d275ec29",
+    "name": "Cat_Facts_API_Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31678816"
+  },
+  "item": [
+    {
+      "name": "breeds",
+      "item": [
+        {
+          "name": "getBreedByLimit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is acceptable\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Total is greater than zero\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.total).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Total is greater than zero\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.total).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Breed object has required fields\", function () {\r",
+                  "    let breed = pm.response.json().data[0];\r",
+                  "\r",
+                  "    pm.expect(breed).to.have.property(\"breed\");\r",
+                  "    pm.expect(breed).to.have.property(\"country\");\r",
+                  "    pm.expect(breed).to.have.property(\"origin\");\r",
+                  "    pm.expect(breed).to.have.property(\"coat\");\r",
+                  "    pm.expect(breed).to.have.property(\"pattern\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/breeds?limit={{limit}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "breeds"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "facts",
+      "item": [
+        {
+          "name": "returnCatFactByLimi&Page",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has required fields\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData).to.have.property(\"current_page\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"total\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"per_page\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data is an array\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Pagination values are correct\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.current_page).to.eql(2);\r",
+                  "    pm.expect(jsonData.per_page).to.eql(1);\r",
+                  "    pm.expect(jsonData.from).to.eql(2);\r",
+                  "    pm.expect(jsonData.to).to.eql(2);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Next page URL is correct\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.next_page_url).to.include(\"page=3\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/facts?limit={{limit}}&page={{page}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "facts"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}"
+                },
+                {
+                  "key": "page",
+                  "value": "{{page}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "fact",
+      "item": [
+        {
+          "name": "returnsRandomCatFact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has required fields\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData).to.have.property(\"fact\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"length\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Fields have correct data types\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.fact).to.be.a(\"string\");\r",
+                  "    pm.expect(jsonData.length).to.be.a(\"number\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Fact is not empty\", function () {\r",
+                  "    let jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.fact.length).to.be.above(0);\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fact?max_length={{max_length}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fact"
+              ],
+              "query": [
+                {
+                  "key": "max_length",
+                  "value": "{{max_length}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
